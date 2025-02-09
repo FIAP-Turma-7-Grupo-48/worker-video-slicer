@@ -19,7 +19,8 @@ public class StorageSlicedVideoRabbitMqClient : RabbitMQPublisher<StorageSlicedV
         var dto = new StorageSlicedVideoSendDto
         {
             RequestId = requestId,
-            file = file
+            File = file,
+            Status = RequestStatus.Processed
         };
 
         await PublishMessageAsync(dto, cancellationToken);

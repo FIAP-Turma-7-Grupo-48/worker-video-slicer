@@ -5,5 +5,7 @@ namespace Infrastructure.Clients.Dtos;
 public record StorageSlicedVideoSendDto
 {
     public string RequestId { get; init; } = string.Empty;
-    public StorageFile file { get; init; }
+    public StorageFile File { get; init; }
+    public RequestStatus Status { get; init; }
+
 }
