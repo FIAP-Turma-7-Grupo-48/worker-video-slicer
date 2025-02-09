@@ -5,7 +5,7 @@ using Domain.ValueObjects;
 using Domain.ValueObjects.Exceptions;
 using Infrastructure.Clients.Exceptions;
 
-namespace Infrastructure.Clients;
+namespace Infrastructure.Clients.Aws.S3;
 
 public class BucketClient : IBucketClient
 {

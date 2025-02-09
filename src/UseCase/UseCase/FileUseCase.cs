@@ -8,15 +8,21 @@ namespace UseCase.UseCase;
 public class FileUseCase : IFileUseCase
 {
     private readonly IBucketClient _bucketClient;
-    public FileUseCase(IBucketClient bucketClient)
+    private readonly IStorageSlicedVideoClient _storageSlicedVideoClient;
+    public FileUseCase(IBucketClient bucketClient, IStorageSlicedVideoClient storageSlicedVideoClient)
     {
-        _bucketClient = bucketClient;   
+        _bucketClient = bucketClient;
+        _storageSlicedVideoClient = storageSlicedVideoClient;
     }
-    public Task<StorageFile> UploadZippedFile(string requestId, IEnumerable<FileModel> files, CancellationToken cancellationToken)
+    public async Task<StorageFile> UploadZippedFile(string requestId, IEnumerable<FileModel> files, CancellationToken cancellationToken)
     {
         var zippedFile = files.ZipFiles();
 
-        return _bucketClient.UploadAsync(requestId,zippedFile, cancellationToken);
+        var storageFile = await _bucketClient.UploadAsync(requestId, zippedFile, cancellationToken);
+
+        await _storageSlicedVideoClient.SendAsync(requestId, storageFile, cancellationToken);
+
+        return storageFile;
     }
 
     public Task<FileModel> DownloadAsync(StorageFile file, CancellationToken cancellationToken)

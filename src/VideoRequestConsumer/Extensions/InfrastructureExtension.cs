@@ -1,9 +1,12 @@
 ﻿using UseCase.UseCase.Interfaces;
 using UseCase.UseCase;
 using Domain.Clients;
-using Infrastructure.Clients;
 using Amazon;
 using Amazon.S3;
+using Infrastructure.Clients.Aws.S3;
+using Infrastructure.Clients.Dtos;
+using Infrastructure.Clients.RabbitMq;
+using RabbitMQ.Client;
 
 namespace VideoRequestConsumer.Extensions;
 
@@ -13,13 +16,15 @@ internal static class InfrastructureExtension
     {
         return
             services
-                .AddClients();
+                .AddClients()
+                .AddRabbitMqConnectionFactory();
     }
 
     private static IServiceCollection AddClients(this IServiceCollection services)
     {
         return services
             .AddSingleton<IBucketClient, BucketClient>()
+            .AddSingleton<IStorageSlicedVideoClient, StorageSlicedVideoRabbitMqClient>()
             .AddStorageClient();
     }
 
@@ -32,5 +37,25 @@ internal static class InfrastructureExtension
 
         return services.
             AddSingleton(amazonS3Client);
+    }
+
+    private static IServiceCollection AddRabbitMqConnectionFactory(this IServiceCollection services)
+    {
+        var hostName = Environment.GetEnvironmentVariable("RabbitMqHostName");
+        var port = int.Parse(Environment.GetEnvironmentVariable("RabbitMqPort"));
+        var user = Environment.GetEnvironmentVariable("RabbitMqUserName");
+        var password = Environment.GetEnvironmentVariable("RabbitMqPassword");
+
+        return
+            services
+                .AddSingleton<IConnectionFactory>(
+                    new ConnectionFactory()
+                    {
+                        HostName = hostName,
+                        Port = port,
+                        UserName = user,
+                        Password = password
+                    }
+                );
     }
 }
