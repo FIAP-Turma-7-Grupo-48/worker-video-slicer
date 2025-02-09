@@ -18,7 +18,8 @@ public class FileUseCase : IFileUseCase
     {
         var zippedFile = files.ZipFiles();
 
-        var storageFile = await _bucketClient.UploadAsync(requestId, zippedFile, cancellationToken);
+        var fileKey = $"zippedFile_{requestId}";
+        var storageFile = await _bucketClient.UploadAsync(fileKey, zippedFile, cancellationToken);
 
         await _storageSlicedVideoClient.SendAsync(requestId, storageFile, cancellationToken);
 
