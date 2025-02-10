@@ -33,7 +33,7 @@ internal static class InfrastructureExtension
         var awsAccessKeyId = Environment.GetEnvironmentVariable("AWS_ACESS_KEY_ID");
         var awsSecretAccessKey= Environment.GetEnvironmentVariable("AWS_SECRET_ACESS_KEY");
         //ToDo: Validar se as configs existem
-        var amazonS3Client = new AmazonS3Client(awsAccessKeyId, awsSecretAccessKey, RegionEndpoint.USEast1);
+        var amazonS3Client = new AmazonS3Client(awsAccessKeyId, awsSecretAccessKey, RegionEndpoint.SAEast1);
 
         return services.
             AddSingleton(amazonS3Client);

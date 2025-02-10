@@ -12,10 +12,10 @@ public class BucketClient : IBucketClient
     private readonly AmazonS3Client _client;
     private readonly string _bucketName;
 
-    public BucketClient(AmazonS3Client client, string bucketName)
+    public BucketClient(AmazonS3Client client)
     {
         _client = client;
-        _bucketName = bucketName;
+        _bucketName = Environment.GetEnvironmentVariable("BucketName");
     }
     public async Task<StorageFile> UploadAsync(string fileKey, FileModel file, CancellationToken cancellationToken)
     {

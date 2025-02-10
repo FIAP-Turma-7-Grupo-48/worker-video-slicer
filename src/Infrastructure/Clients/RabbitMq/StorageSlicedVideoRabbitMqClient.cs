@@ -9,7 +9,7 @@ namespace Infrastructure.Clients.RabbitMq;
 public class StorageSlicedVideoRabbitMqClient : RabbitMQPublisher<StorageSlicedVideoSendDto>, IStorageSlicedVideoClient
 {
     public const string QueueName = "SlicedVideo";
-    public StorageSlicedVideoRabbitMqClient(IConnectionFactory factory, string queue) : base(factory, queue)
+    public StorageSlicedVideoRabbitMqClient(IConnectionFactory factory) : base(factory, QueueName)
     {
     }
 

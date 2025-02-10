@@ -4,9 +4,16 @@
     "VideoRequestConsumer": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
-      }
+        "environmentVariables": {
+            "DOTNET_ENVIRONMENT": "Development",
+            "AWS_ACCESS_KEY_ID": "",
+            "AWS_SECRET_ACCESS_KEY": "",
+            "BucketName": "fiap-video-slicer",
+            "RabbitMqHostName": "localhost",
+            "RabbitMqPort": "5672",
+            "RabbitMqUserName": "admin",
+            "RabbitMqPassword": "admin"
+        }
     }
   }
 }

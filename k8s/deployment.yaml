@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiap-video-request-api-deplyoment
+  labels:
+    app: fiap-video-request-api 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fiap-video-request-api
+  template: 
+    metadata:
+      labels:
+        app: fiap-video-request-api
+    spec:
+      containers:
+      - name: fiap-video-request-api 
+        image: "533267350475.dkr.ecr.sa-east-1.amazonaws.com/fiap-video-slicer/video-request-api:latest"
+        ports:
+        - containerPort: 80 
